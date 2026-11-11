@@ -6,12 +6,12 @@ const mongoose = require('mongoose');
 }, { _id: false });
 
   const paketSchema = new mongoose.Schema({
-    noresi: { type: String, required: [true, 'nim wajib diisi'], unique: true, trim: true },
-    nama: { type: String, required: [true, 'nama wajib diisi'], trim: true },
-    alamat: alamatSchema,
-    kurirId: { type: mongoose.Schema.Types.ObjectId, ref: 'Kurir' },
-    beratKg: { type: mongoose.Schema.Types.ObjectId, ref: 'Kurir' },
-    layanan: { type: mongoose.Schema.Types.ObjectId, ref: 'Kurir' },
+    noResi: { type: String, required: [true, 'noResi wajib diisi'], unique: true, trim: true },
+    namaPenerima: { type: String, required: [true, 'namaPenerima wajib diisi'], trim: true },
+    beratKg: { type: Number, required: [true, 'beratKg wajib diisi'], min: [0, 'beratKg minimal 0'] },
+    layanan: { type: String, required: [true, 'layanan wajib diisi'], trim: true },
+    alamatTujuan: alamatSchema,
+    kurirId: { type: mongoose.Schema.Types.ObjectId, ref: 'Kurir', required: [true, 'kurirId wajib diisi'] },
     createdAt: { type: Date, default: Date.now },
   });
 
