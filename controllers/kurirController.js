@@ -1,15 +1,14 @@
-const kurir = require('../models/kurirModel');
+const Kurir = require('../models/kurirModel');
 
-
+// Menambahkan data kurir
 exports.create = async (req, res) => {
-  try {
-    const kurir = await kurir.create(req.body);
-    res.status(201).json(kurir);
-  } catch (err) {
-    res.status(400).json({ message: err.message });
-  }
+  const { kode, nama } = req.body;
+  const data = await Kurir.create({ kode, nama });
+  res.status(201).json(data);
 };
 
+// Menampilkan semua kurir
 exports.getAll = async (req, res) => {
-  res.json(await kurir.find());
+  const data = await Kurir.find();
+  res.status(200).json(data);
 };

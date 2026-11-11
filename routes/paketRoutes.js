@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const c = require('../controllers/paketController');
+const paketController = require('../controllers/paketController');
 const cekApiKey = require('../middlewares/cekApiKey');
 
-router.get('/', c.getAll);
-router.get('/:id', c.getById);
-router.post('/', cekApiKey, c.create);
+router.get('/', paketController.getAll);
+router.get('/:id', paketController.getById);
+router.post('/', cekApiKey, paketController.create);
 
 module.exports = router;
