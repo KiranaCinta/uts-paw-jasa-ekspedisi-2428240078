@@ -21,12 +21,8 @@ function angkaAman(nilai, bawaan, min, maks) {
 
 // Menambahkan data paket
 exports.create = async (req, res) => {
-  try {
     const data = await Paket.create(req.body);
     res.status(201).json(data);
-  } catch (err) {
-    res.status(400).json({ message: err.message });
-  }
 };
 
 // Menampilkan semua paket

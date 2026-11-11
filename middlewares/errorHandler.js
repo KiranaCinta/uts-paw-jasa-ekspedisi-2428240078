@@ -5,22 +5,58 @@ function errorHttp(status, message) {
 }
 
 function notFoundHandler(req, res) {
-  res.status(404).json({ message: `Rute ${req.method} ${req.originalUrl} tidak ditemukan` });
+  res.status(404).json({
+    message: `Rute ${req.method} ${req.originalUrl} tidak ditemukan`
+  });
 }
 
 function errorHandler(err, req, res, next) {
+
+  // JSON tidak valid
   if (err.type === 'entity.parse.failed') {
-    return res.status(400).json({ message: 'Format JSON tidak valid' });
+    return res.status(400).json({
+      message: 'Format JSON tidak valid'
+    });
+  }
+
+  // ID MongoDB tidak valid
+  if (err.name === 'CastError') {
+    return res.status(400).json({
+      message: 'ID tidak valid'
+    });
+  }
+
+  // Validasi Schema gagal
+  if (err.name === 'ValidationError') {
+    return res.status(400).json({
+      message: 'Data tidak valid',
+      detail: Object.values(err.errors).map(e => e.message)
+    });
+  }
+
+  // Data duplikat
+  if (err.code === 11000) {
+    return res.status(409).json({
+      message: 'Data sudah digunakan'
+    });
   }
 
   const status = err.status || 500;
 
   if (status === 500) {
     console.error(err.stack);
-    return res.status(500).json({ message: 'Terjadi kesalahan pada server' });
+    return res.status(500).json({
+      message: 'Terjadi kesalahan pada server'
+    });
   }
 
-  res.status(status).json({ message: err.message });
+  res.status(status).json({
+    message: err.message
+  });
 }
 
-module.exports = { errorHttp, notFoundHandler, errorHandler };
+module.exports = {
+  errorHttp,
+  notFoundHandler,
+  errorHandler
+};
