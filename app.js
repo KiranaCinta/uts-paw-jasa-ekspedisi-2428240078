@@ -26,10 +26,10 @@ app.get('/', (req, res) => {
   res.send('Server API JasaEkspedisi berjalan!');
 });
 
-// ---------- Route Alumni ----------
+// ---------- Route Paket ----------
 app.use('/paket', paketRoutes);
 
-// ---------- Route Prodi ----------
+// ---------- Route Kurir ----------
 app.use('/kurir', kurirRoutes);
 
 // ---------- Route untuk mensimulasikan error ----------
